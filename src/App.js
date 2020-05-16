@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import NavBar from './components/Navbar';
+import InventoryList from './components/InventoryList';
+import InventoryItem from './components/InventoryItem';
+import DetailInventory from './components/DetailInventory';
+import SignIn from './components/SignIn';
+import Register from './components/Register';
+import CreateInventory from './components/CreateInventory';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+
+export default class App extends Component {
+
+    render() {
+        return (
+            <BrowserRouter>
+                <div>
+                    <NavBar />
+                    <Switch>
+                        <Route exact path="/" component={InventoryList} />
+                        <Route path="/inventory/:id" component={DetailInventory} />
+                        <Route path="/signin" component={SignIn} />
+                        <Route path="/register" component={Register} />
+                        <Route path="/create" component={CreateInventory} />
+                    </Switch>
+                </div>
+            </BrowserRouter>
+        )
+    }
 }
-
-export default App;
