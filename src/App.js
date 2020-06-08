@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import NavBar from './components/Navbar';
 import InventoryList from './components/InventoryList';
-import InventoryItem from './components/InventoryItem';
 import DetailInventory from './components/DetailInventory';
 import SignIn from './components/SignIn';
 import Register from './components/Register';

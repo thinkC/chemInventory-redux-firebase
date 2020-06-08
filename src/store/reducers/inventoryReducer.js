@@ -35,9 +35,16 @@ const initState = {
 const inventoryReducer = (state = initState, action) => {
     switch (action.type) {
         case 'CREATE_INVENTORY':
-            console.log('created Inventory', action.inventory)
+            console.log('created Inventory', action.inventory);
+            return state;
+        case 'CREATE_INVENTORY_ERROR':
+            console.log('create inventory err', action.err);
+            return state;
+        default:
+            return state;
     }
-    return state;
+
+
 }
 
 export default inventoryReducer;

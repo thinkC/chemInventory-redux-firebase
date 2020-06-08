@@ -5,7 +5,6 @@ export default function InventorySumary(props) {
 
 
     const { inventories } = props;
-    console.log(inventories)
     //console.log(inventories)
 
     // const aa = async () => {
@@ -20,8 +19,6 @@ export default function InventorySumary(props) {
         return null
         //aa();
 
-    } else {
-
     }
 
 
@@ -30,31 +27,32 @@ export default function InventorySumary(props) {
 
     //console.log(inventories)
 
-    // const bb = setTimeout((getTotalIventory)=>{
 
-    // },5000)
 
-    const cc = (obj) => {
-        let dd = setTimeout(() => { getTotalIventory(obj) }, 5000)
-        return dd
-    }
+    // const getTotalIventory = (obj) => {
 
-    const callActive = (inventories) => {
+    //     //console.log(inventories)
+    //     let total = inventories.reduce((acc, curr) => {
+    //         return acc += parseInt(curr.totalremaining)
+    //     }, 0)
+    //     //console.log(total)
+    //     return total;
+    // }
+
+    const getTotalIventory = async (obj) => {
+
         //console.log(inventories)
-        let callActive1 = setTimeout(() => { getActiveChem(inventories) }, 5000)
-        return callActive1;
-    }
-
-    const getTotalIventory = (obj) => {
-
-        console.log(inventories)
-        let total = inventories.reduce((acc, curr) => {
-            console.log(curr.expiredate.seconds)
+        let total = await inventories;
+        console.log(total)
+        total = inventories.reduce((acc, curr) => {
             return acc += parseInt(curr.totalremaining)
         }, 0)
-        console.log(total)
+        //console.log(total)
         return total;
     }
+
+
+
 
     const getDateDiff = (date1, date2) => {
         const daysCount = Math.round((date2 - date1) / (1000 * 60 * 60 * 24));
@@ -62,63 +60,23 @@ export default function InventorySumary(props) {
         return daysCount;
     }
 
-    // const getDateDiff = (date1, date2) => {
-    //     const daysCount = Math.round((date2 - date1) / (1000));
-    //     //console.log(daysCount);
-    //     return daysCount;
-    // }
-
-    // const getActiveChem = () => {
-    //     let activeChem = [];
-    //     for (let i = 0; i < inventories.length; i++) {
-    //         console.log(inventories)
-    //         //console.log(inventories[i].expiredate)
-    //         let getNumDay = getDateDiff(new Date(inventories[i].manufacturedate), new Date(inventories[i].expiredate))
-    //         //console.log(inventories.manufacturedate)
-    //         console.log(getNumDay)
-    //         if (getNumDay > 90) {
-    //             activeChem.push(getNumDay)
-    //         }
-
-    //     }
-    //     console.log(activeChem)
-
-    //     let numActiveChem = activeChem.length;
-    //     console.log(numActiveChem)
-    //     return numActiveChem
-    // }
-
-
     const getActiveChem = () => {
         let activeChem = [];
-        const zz = inventories.map((item) => {
-            //console.log(item.expiredate.seconds)
-            let date1 = item.expiredate.seconds;
-            let date2 = item.manufacturedate.seconds
-
-            date1 = new Date(date1 * 1000);
-            date2 = new Date(date2 * 1000);
-
-            let getNumDay = getDateDiff(date2, date1)
-            console.log(getNumDay)
-            convertSecToDays(getNumDay)
+        for (let i = 0; i < inventories.length; i++) {
+            //console.log(inventories[i])
+            //console.log(inventories[i].expiredate)
+            let getNumDay = getDateDiff(new Date(inventories[i].manufacturedate), new Date(inventories[i].expiredate))
+            //console.log(getNumDay)
             if (getNumDay > 90) {
                 activeChem.push(getNumDay)
             }
-        })
 
-        console.log(activeChem)
+        }
+        //console.log(activeChem)
 
         let numActiveChem = activeChem.length;
-        console.log(numActiveChem)
+        //console.log(numActiveChem)
         return numActiveChem
-    }
-
-    const convertSecToDays = (num) => {
-        let aa = num / 86400
-        console.log(aa)
-        return aa;
-        //return num / 86400
     }
 
     const getExpChem = () => {
@@ -159,23 +117,21 @@ export default function InventorySumary(props) {
             <div className="card mt-5" >
 
                 <div className="card-body">
-                    {/* <h5 className="card-title">Total Inventory: {getTotalIventory(inventories)}</h5> */}
-                    <h5 className="card-title">Total Inventory: {cc(inventories)}</h5>
+                    <h5 className="card-title">Total Inventory: {getTotalIventory(inventories)}</h5>
 
                 </div>
             </div>
             <div className="card mt-3" >
 
                 <div className="card-body">
-                    {/* <h5 className="card-title text-success">Active Chemicals: {getActiveChem(inventories)}</h5> */}
-                    <h5 className="card-title text-success">Active Chemicals: {callActive(inventories)}</h5>
+                    <h5 className="card-title text-success">Active Chemicals: {getActiveChem(inventories)}</h5>
 
                 </div>
             </div>
             <div className="card mt-3" >
 
                 <div className="card-body">
-                    {/* <h5 className="card-title text-warning">About to Expire Chemicals: {getWarningChem(inventories)}</h5> */}
+                    <h5 className="card-title text-warning">About to Expire Chemicals: {getWarningChem(inventories)}</h5>
 
                 </div>
             </div>
@@ -183,7 +139,7 @@ export default function InventorySumary(props) {
             <div className="card mt-3" >
 
                 <div className="card-body">
-                    {/* <h5 className="card-title text-danger">Expired Chemicals: {getExpChem(inventories)}</h5> */}
+                    <h5 className="card-title text-danger">Expired Chemicals: {getExpChem(inventories)}</h5>
 
                 </div>
             </div>
@@ -201,8 +157,10 @@ export default function InventorySumary(props) {
 
 // class InventorySummary extends Component {
 
-
-
+//     componentDidMount() {
+//         const { inventories } = this.props;
+//         console.log(inventories)
+//     }
 
 //     // getTotalIventory = (obj) => {
 
@@ -277,25 +235,12 @@ export default function InventorySumary(props) {
 //     render() {
 //         const { inventories } = this.props;
 //         console.log(inventories)
-
-//         // const getTotalIventory = (obj) => {
-
-//         //     console.log(inventories)
-//         //     let total = inventories.reduce((acc, curr) => {
-//         //         return acc += parseInt(curr.totalremaining)
-//         //     }, 0)
-//         //     //console.log(total)
-//         //     return total;
-//         // }
-
-
-
 //         return (
 //             <div>
 //                 <div className="card mt-5" >
 
 //                     <div className="card-body">
-//                         {/* <h5 className="card-title">Total Inventory: {getTotalIventory(inventories)}</h5> */}
+//                         {/* <h5 className="card-title">Total Inventory: {this.getTotalIventory(inventories)}</h5> */}
 
 //                     </div>
 //                 </div>

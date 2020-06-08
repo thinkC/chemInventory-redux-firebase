@@ -4,7 +4,8 @@ import { createInventory } from '../store/actions/inventoryActions';
 //import axios from 'axios';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import thunk from 'redux-thunk';
+import { Redirect } from 'react-router-dom';
+//import thunk from 'redux-thunk';
 
 
 
@@ -118,6 +119,7 @@ class CreateInventory extends Component {
         // window.location = '/';
 
         this.props.createInventory(this.state)
+        this.props.history.push('/')
 
 
         //     //using axios
@@ -142,6 +144,9 @@ class CreateInventory extends Component {
 
     }
     render() {
+        const { auth } = this.props
+        //redirect if user is not signed in
+        if (!auth.uid) return <Redirect to="/signin" />
         return (
             <div className="container">
                 <div className="row">
@@ -218,10 +223,16 @@ class CreateInventory extends Component {
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        auth: state.firebase.auth
+    }
+}
+
 const mapDispatchToProps = (dispatch) => {
     return {
         createInventory: (inventory) => dispatch(createInventory(inventory))
     }
 }
 
-export default connect(null, mapDispatchToProps)(CreateInventory);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateInventory);
