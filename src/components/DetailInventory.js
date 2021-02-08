@@ -11,6 +11,7 @@ import { Redirect } from 'react-router-dom';
 const DetailInventory = (props) => {
     // const { inventory, inventories } = props;
     // console.log(inventories)
+    console.log(props)
     const { auth } = props
     //redirect if user is not signed in
     if (!auth.uid) return <Redirect to="/signin" />
